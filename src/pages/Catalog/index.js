@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import FloatingCart from '../../components/FloatingCart';
 import formatValue from '../../utils/formatValue';
+
 
 import {
   Container,
@@ -24,6 +26,13 @@ export default function App() {
       image_url:
         'https://res.cloudinary.com/robertosousa1/image/upload/v1594492578/dio/quarterly_subscription_yjolpc.png',
       price: 150,
+    },
+    {
+      id: '2',
+      title: 'Assinatura Anual',
+      image_url:
+        'https://res.cloudinary.com/robertosousa1/image/upload/v1594492578/dio/annual_subscription_qyolci.png',
+      price: 540,
     },
   ]);
 
@@ -52,6 +61,7 @@ export default function App() {
           )}
         />
       </ProductContainer>
+      <FloatingCart />
     </Container>
   );
 }
