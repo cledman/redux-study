@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useMemo } from 'react';
 import { View } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
@@ -19,13 +19,14 @@ import {
   ActionButton,
   TotalProductsContainer,
   TotalProductsText,
-  SubTotalValue
+  SubTotalValue,
 } from './styles';
 
 import formatValue from '../../utils/formatValue';
 
 export default function Cart() {
-  const [products, setProducts] = useState([{
+  const [products, setProducts] = useState([
+    {
       id: '1',
       title: 'Assinatura Trimestral',
       image_url:
@@ -35,14 +36,22 @@ export default function Cart() {
     },
     {
       id: '2',
-      title: 'Assinatura Anual',
+      title: 'Assinatura Trimestral',
       image_url:
-        'https://res.cloudinary.com/robertosousa1/image/upload/v1594492578/dio/annual_subscription_qyolci.png',
+        'https://res.cloudinary.com/robertosousa1/image/upload/v1594492578/dio/quarterly_subscription_yjolpc.png',
       quantity: 2,
-        price: 540,
+      price: 150,
     },
   ]);
 
+  const cartSize = useMemo(() => products.length || 0, [products]);
+  const cartTotal = useMemo(() => {
+  const cartAmount  = products.reduce((accumulator, product) => {
+      const totalPrice = accumulator + product.price * product.quantity;
+      return totalPrice;
+    }, 0);
+    return formatValue();
+  }, [products]);
   return (
     <Container>
       <ProductConainer>
@@ -82,6 +91,13 @@ export default function Cart() {
           )}
         />
       </ProductConainer>
+      <TotalProductsContainer>
+        <FeatherIcon name="shopping-cart" color="#fff" size={24} />
+        <TotalProductsText>
+          {cartSize} {cartSize === 1 ? 'item' : 'itens'}
+        </TotalProductsText>
+        <SubTotalValue>{cartTotal}</SubTotalValue>
+      </TotalProductsContainer>
     </Container>
   );
 }
